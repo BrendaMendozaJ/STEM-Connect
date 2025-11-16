@@ -957,25 +957,25 @@ const StoriesPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl p-8 shadow-lg">
+      <div className="bg-gray-900 rounded-xl p-8 shadow-lg border border-cyan-500/30">
         <div className="flex justify-between items-center">
           <div>
-            <h2 className="text-3xl font-bold text-purple-900 mb-2">Historias Inspiradoras</h2>
-            <p className="text-gray-600">Conoce a los científicos latinoamericanos que están cambiando el mundo</p>
+            <h2 className="text-3xl font-bold text-cyan-400 mb-2 font-mono">Inspiración STEM</h2>
+            <p className="text-cyan-300 font-mono">>>> Científicos y recursos creados con IA para tu vocación</p>
           </div>
           <div className="flex gap-2">
-            <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+            <div className={`px-3 py-1 rounded-lg text-xs font-medium border font-mono ${
               realScientistsData.length > 0 
-                ? 'bg-green-100 text-green-700' 
-                : 'bg-yellow-100 text-yellow-700'
+                ? 'bg-green-900/50 text-green-400 border-green-500/50' 
+                : 'bg-yellow-900/50 text-yellow-400 border-yellow-500/50'
             }`}>
               {realScientistsData.length > 0 ? '✓ Datos reales' : 'Datos demo'}
             </div>
             <button
               onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+              className="px-4 py-2 bg-cyan-600 text-black rounded-lg hover:bg-cyan-500 transition-colors text-sm font-mono"
             >
-              🔄 Actualizar
+              [REFRESH]
             </button>
           </div>
         </div>
@@ -1087,24 +1087,24 @@ const StoriesPage = () => {
         </div>
       )}
 
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl p-8 text-white shadow-xl">
-        <h3 className="text-2xl font-bold mb-4">🌟 ¿Te inspiran estas historias?</h3>
-        <p className="mb-6 opacity-90">
+      <div className="bg-gray-900 rounded-xl p-8 shadow-lg border border-cyan-500/30">
+        <h3 className="text-2xl font-bold mb-4 text-cyan-400 font-mono">🌟 ¿Te inspiran estas historias?</h3>
+        <p className="mb-6 text-cyan-300 font-mono">
           Estos científicos latinoamericanos demuestran que desde nuestra región podemos contribuir 
           significativamente al conocimiento mundial. ¡Tú también puedes ser parte de esta historia!
         </p>
         <div className="grid md:grid-cols-3 gap-4">
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
-            <div className="text-2xl font-bold">{allScientists.length}</div>
-            <div className="text-sm opacity-90">Científicos destacados</div>
+          <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50">
+            <div className="text-2xl font-bold text-cyan-400 font-mono">[{allScientists.length}]</div>
+            <div className="text-sm text-cyan-300 font-mono">Científicos destacados</div>
           </div>
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
-            <div className="text-2xl font-bold">{areas.length - 1}</div>
-            <div className="text-sm opacity-90">Áreas de investigación</div>
+          <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50">
+            <div className="text-2xl font-bold text-cyan-400 font-mono">[{areas.length - 1}]</div>
+            <div className="text-sm text-cyan-300 font-mono">Áreas de investigación</div>
           </div>
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4">
-            <div className="text-2xl font-bold">{countries.length - 1}</div>
-            <div className="text-sm opacity-90">Países representados</div>
+          <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50">
+            <div className="text-2xl font-bold text-cyan-400 font-mono">[{countries.length - 1}]</div>
+            <div className="text-sm text-cyan-300 font-mono">Países representados</div>
           </div>
         </div>
       </div>
