@@ -5,6 +5,8 @@ import { saveChatHistory, loadChatHistory, clearChatHistory } from './utils/chat
 import { realScientists, getScientistsByFilters } from './data/scientists';
 import { fetchLatinScientists, fetchPapers } from './services/openAlexAPI';
 import { generateChatResponse } from './services/huggingFaceAPI';
+// import aiService from './services/aiService';
+import { generateComicPanel, generateComicStory } from './services/imageGeneration';
 
 // Componente de Navegación
 const Navigation = ({ currentPage, setCurrentPage, isMobileMenuOpen, setIsMobileMenuOpen }) => {
@@ -55,7 +57,7 @@ const Navigation = ({ currentPage, setCurrentPage, isMobileMenuOpen, setIsMobile
       `}>
         <div className="mb-8">
           <h1 className="text-2xl font-bold mb-2 text-cyan-400 font-mono">AI-PathFinder</h1>
-          <p className="text-cyan-300 text-sm font-mono">>>> Sistema de orientación STEM</p>
+          <p className="text-cyan-300 text-sm font-mono">Sistema de orientación STEM</p>
         </div>
         
         <ul className="space-y-2 flex-1">
@@ -97,45 +99,65 @@ const Navigation = ({ currentPage, setCurrentPage, isMobileMenuOpen, setIsMobile
 const HomePage = () => {
   return (
     <div className="space-y-8">
-      <div className="bg-gradient-to-r from-gray-900 via-blue-900 to-black rounded-2xl p-8 text-cyan-100 shadow-2xl border border-cyan-500/30">
-        <h2 className="text-4xl font-bold mb-4 text-cyan-400 font-mono">Descubre tu Camino STEM</h2>
+      <div className="bg-gradient-to-r from-gray-900/80 via-blue-900/80 to-black/80 backdrop-blur-sm rounded-2xl p-8 text-cyan-100 shadow-2xl border border-cyan-500/30">
+        <div className="text-center mb-8">
+          <img 
+            src="/logo.png" 
+            alt="AI-PathFinder Logo" 
+            className="w-64 h-64 mx-auto mb-6"
+          />
+          <p className="text-cyan-300 font-mono text-xl">Sistema de orientación vocacional STEM</p>
+        </div>
+        <h2 className="text-3xl font-bold mb-4 text-cyan-100 font-mono">Descubre tu Camino STEM</h2>
         <p className="text-xl mb-6 opacity-90">
-          Conoce científicos latinoamericanos inspiradores y encuentra tu vocación con ayuda de IA
+          Conecta con científicos latinoamericanos inspiradores y encuentra tu vocación con inteligencia artificial
         </p>
-        <div className="flex flex-wrap gap-4">
-          <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/30 hover:border-cyan-400 transition-all">
             <div className="text-3xl font-bold text-cyan-400 font-mono">[500+]</div>
             <div className="text-sm text-cyan-300 font-mono">Científicos LATAM</div>
           </div>
-          <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50">
-            <div className="text-3xl font-bold text-cyan-400 font-mono">[15]</div>
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-purple-500/30 hover:border-purple-400 transition-all">
+            <div className="text-3xl font-bold text-purple-400 font-mono">[15]</div>
             <div className="text-sm text-cyan-300 font-mono">Áreas de investigación</div>
           </div>
-          <div className="bg-black/40 backdrop-blur-sm rounded-lg p-4 border border-cyan-500/50">
-            <div className="text-3xl font-bold text-cyan-400 font-mono">[8]</div>
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-blue-500/30 hover:border-blue-400 transition-all">
+            <div className="text-3xl font-bold text-blue-400 font-mono">[8]</div>
             <div className="text-sm text-cyan-300 font-mono">Países representados</div>
           </div>
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-gray-900 rounded-xl p-6 shadow-lg border border-cyan-500/30 hover:shadow-xl hover:border-cyan-400 transition-all">
-          <Compass className="text-cyan-400 mb-4" size={32} />
-          <h3 className="text-xl font-bold mb-2 text-cyan-100 font-mono">Explora Intereses</h3>
-          <p className="text-cyan-300 text-sm">Descubre áreas de la ciencia que te apasionan</p>
-        </div>
+      <div className="bg-gray-900/70 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-cyan-500/30">
+        <h3 className="text-2xl font-bold mb-6 text-cyan-400 font-mono text-center">🚀 Funcionalidades</h3>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="bg-black/20 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-cyan-500/30 hover:shadow-xl hover:border-cyan-400 transition-all hover:scale-105">
+            <Compass className="text-cyan-400 mb-4" size={32} />
+            <h4 className="text-xl font-bold mb-2 text-cyan-100 font-mono">Explora Intereses</h4>
+            <p className="text-cyan-300 text-sm">Descubre áreas de la ciencia que te apasionan y personaliza tu experiencia</p>
+          </div>
 
-        <div className="bg-gray-900 rounded-xl p-6 shadow-lg border border-blue-500/30 hover:shadow-xl hover:border-blue-400 transition-all">
-          <MessageSquare className="text-blue-400 mb-4" size={32} />
-          <h3 className="text-xl font-bold mb-2 text-cyan-100 font-mono">Orientación IA</h3>
-          <p className="text-cyan-300 text-sm">Conversa con nuestro asistente vocacional</p>
-        </div>
+          <div className="bg-black/20 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-purple-500/30 hover:shadow-xl hover:border-purple-400 transition-all hover:scale-105">
+            <MessageSquare className="text-purple-400 mb-4" size={32} />
+            <h4 className="text-xl font-bold mb-2 text-cyan-100 font-mono">Orientación</h4>
+            <p className="text-cyan-300 text-sm">Conversa con nuestro asistente vocacional con IA híbrida (AWS Bedrock + fallbacks)</p>
+          </div>
 
-        <div className="bg-gray-900 rounded-xl p-6 shadow-lg border border-green-500/30 hover:shadow-xl hover:border-green-400 transition-all">
-          <BookOpen className="text-green-400 mb-4" size={32} />
-          <h3 className="text-xl font-bold mb-2 text-cyan-100 font-mono">Inspiración STEM</h3>
-          <p className="text-cyan-300 text-sm">Científicos y recursos creados con IA</p>
+          <div className="bg-black/20 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-green-500/30 hover:shadow-xl hover:border-green-400 transition-all hover:scale-105">
+            <BookOpen className="text-green-400 mb-4" size={32} />
+            <h4 className="text-xl font-bold mb-2 text-cyan-100 font-mono">Inspiración </h4>
+            <p className="text-cyan-300 text-sm">Científicos latinoamericanos y recursos educativos generados con IA</p>
+          </div>
         </div>
+      </div>
+
+      <div className="bg-black/20 backdrop-blur-sm rounded-lg p-6 border border-cyan-500/30 text-center">
+        <p className="text-cyan-300 font-mono mb-2">
+            <strong className="text-cyan-400">PhawAI + TaRecDA 2025</strong> - Arequipa, Perú
+        </p>
+        <p className="text-sm text-cyan-400 font-mono">
+          Proyecto de orientación vocacional STEM para estudiantes latinoamericanos
+        </p>
       </div>
     </div>
   );
@@ -261,6 +283,24 @@ const ChatbotPage = () => {
   const [messages, setMessages] = useState(() => loadChatHistory());
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [bedrockStatus, setBedrockStatus] = useState('checking');
+
+  useEffect(() => {
+    // Verificar estado de Bedrock
+    const checkBedrock = async () => {
+      try {
+        const response = await fetch('https://ebs7w97sj7.execute-api.us-east-1.amazonaws.com/prod/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: 'test', conversationHistory: [] })
+        });
+        setBedrockStatus(response.ok ? 'online' : 'offline');
+      } catch (error) {
+        setBedrockStatus('offline');
+      }
+    };
+    checkBedrock();
+  }, []);
 
   const quickQuestions = [
     '¿Qué carreras STEM me recomiendas?',
@@ -280,31 +320,62 @@ const ChatbotPage = () => {
     setInputText('');
     setIsTyping(true);
 
-    // Generar respuesta con IA
-    setTimeout(async () => {
-      const botResponse = await generateBotResponse(text);
+    try {
+      let botResponse;
+      if (bedrockStatus === 'online') {
+        const response = await fetch('https://ebs7w97sj7.execute-api.us-east-1.amazonaws.com/prod/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, conversationHistory: [] })
+        });
+        const data = await response.json();
+        botResponse = data.response || 'Error en la respuesta';
+      } else {
+        botResponse = generateFallbackResponse(text);
+      }
+
       const botMessage = { id: Date.now() + 1, type: 'bot', text: botResponse };
       const finalMessages = [...newMessages, botMessage];
       setMessages(finalMessages);
       saveChatHistory(finalMessages);
-      setIsTyping(false);
-    }, 1500);
+    } catch (error) {
+      const errorMessage = { id: Date.now() + 1, type: 'bot', text: generateFallbackResponse(text) };
+      const finalMessages = [...newMessages, errorMessage];
+      setMessages(finalMessages);
+      saveChatHistory(finalMessages);
+    }
+    
+    setIsTyping(false);
   };
 
-  const generateBotResponse = async (userText) => {
-    try {
-      return await generateChatResponse(userText, messages);
-    } catch (error) {
-      console.error('Error generating response:', error);
-      return '🤔 Interesante pregunta. Te sugiero explorar nuestras secciones de Intereses y Historias para descubrir más sobre las áreas STEM que podrían fascinarte.';
-    }
+  const generateFallbackResponse = (text) => {
+    const responses = [
+      "Como orientador STEM, te recomiendo explorar biotecnología o ciencias de datos. Estas áreas tienen gran demanda en Latinoamérica.",
+      "Las carreras más prometedoras incluyen inteligencia artificial, bioingeniería y ciencias ambientales. ¿Cuál te interesa más?",
+      "Científicos latinoamericanos como Eva Ramón Gallegos (biotecnología) y Mario Molina (química) son grandes ejemplos a seguir.",
+      "Para estudiantes latinoamericanos, recomiendo matemáticas aplicadas o ingeniería biomédica por su impacto social."
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
   };
 
   return (
     <div className="space-y-6">
       <div className="bg-gray-900 rounded-xl p-8 shadow-lg border border-cyan-500/30">
-        <h2 className="text-3xl font-bold text-cyan-400 mb-2 font-mono">Orientación Vocacional IA</h2>
-        <p className="text-cyan-300 font-mono">>>> Conversa para descubrir tu camino STEM ideal</p>
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <h2 className="text-3xl font-bold text-cyan-400 mb-2 font-mono">Orientación Vocacional IA</h2>
+            <p className="text-cyan-300 font-mono">>>> Conversa para descubrir tu camino STEM ideal</p>
+          </div>
+          <div className={`px-3 py-1 rounded text-xs font-mono border ${
+            bedrockStatus === 'online' 
+              ? 'bg-green-900/50 text-green-400 border-green-500/50' 
+              : bedrockStatus === 'offline'
+              ? 'bg-red-900/50 text-red-400 border-red-500/50'
+              : 'bg-yellow-900/50 text-yellow-400 border-yellow-500/50'
+          }`}>
+            AWS Bedrock: {bedrockStatus === 'online' ? 'ON' : bedrockStatus === 'offline' ? 'OFF' : 'CHECKING'}
+          </div>
+        </div>
       </div>
 
       <div className="bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-cyan-500/30">
@@ -818,6 +889,103 @@ const DashboardPage = () => {
 
 // Página de Recursos
 const RecursosPage = () => {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [contentType, setContentType] = useState('');
+  const [userPrompt, setUserPrompt] = useState('');
+  const [comicPanels, setComicPanels] = useState([]);
+  const [selectedInterests] = useState(() => {
+    const saved = localStorage.getItem('stemInterests');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const generateContent = async (type) => {
+    if (!userPrompt.trim()) {
+      alert('Por favor, describe qué tipo de contenido quieres generar');
+      return;
+    }
+
+    setIsGenerating(true);
+    setContentType(type);
+    
+    try {
+      const interestsText = selectedInterests.length > 0 
+        ? `Mis intereses STEM: ${selectedInterests.join(', ')}. ` 
+        : '';
+      
+      if (type === 'historia') {
+        const prompt = `${interestsText}Crea una historia corta inspiradora sobre STEM: ${userPrompt}. Incluye personajes latinoamericanos y situaciones reales de ciencia.`;
+        const response = 'Historia generada: Una joven científica latinoamericana descubre su pasión por la biotecnología...';
+        setGeneratedContent(response);
+      } else {
+        // Generar cómic gráfico
+        const storyPanels = await generateComicStory(userPrompt, selectedInterests);
+        const panelsWithImages = [];
+        
+        for (const panel of storyPanels) {
+          const imageUrl = await generateComicPanel(panel.description, panel.id);
+          panelsWithImages.push({
+            ...panel,
+            imageUrl: imageUrl || '/api/placeholder/300/300'
+          });
+        }
+        
+        setComicPanels(panelsWithImages);
+        setGeneratedContent('comic_generated');
+      }
+    } catch (error) {
+      console.error('Error generando contenido:', error);
+      setGeneratedContent('Error al generar contenido. Por favor, intenta de nuevo.');
+    }
+    
+    setIsGenerating(false);
+  };
+
+  const getRecommendedContent = (interests) => {
+    const contentMap = {
+      'ai': {
+        title: 'IA y Machine Learning',
+        items: [
+          { type: 'video', title: 'Redes Neuronales Explicadas', description: 'Introducción visual a deep learning', thumbnail: 'https://via.placeholder.com/300x200/8b5cf6/ffffff?text=IA+Video' },
+          { type: 'comic', title: 'Las Aventuras de Data', description: 'Cómic sobre algoritmos de ML', thumbnail: 'https://via.placeholder.com/300x200/8b5cf6/ffffff?text=IA+Comic' }
+        ]
+      },
+      'bio': {
+        title: 'Biología y Biotecnología', 
+        items: [
+          { type: 'video', title: 'CRISPR en Acción', description: 'Edición genética explicada', thumbnail: 'https://via.placeholder.com/300x200/10b981/ffffff?text=Bio+Video' },
+          { type: 'comic', title: 'Micro Adventures', description: 'Viaje al mundo celular', thumbnail: 'https://via.placeholder.com/300x200/10b981/ffffff?text=Bio+Comic' }
+        ]
+      },
+      'physics': {
+        title: 'Física Cuántica',
+        items: [
+          { type: 'video', title: 'Mecánica Cuántica Visual', description: 'Conceptos cuánticos simplificados', thumbnail: 'https://via.placeholder.com/300x200/3b82f6/ffffff?text=Fisica+Video' },
+          { type: 'comic', title: 'Quantum Quest', description: 'Aventuras en el mundo cuántico', thumbnail: 'https://via.placeholder.com/300x200/3b82f6/ffffff?text=Fisica+Comic' }
+        ]
+      }
+    };
+
+    const userContent = [];
+    interests.forEach(interest => {
+      if (contentMap[interest]) {
+        userContent.push(contentMap[interest]);
+      }
+    });
+
+    if (userContent.length === 0) {
+      userContent.push({
+        title: 'Contenido General STEM',
+        items: [
+          { type: 'video', title: 'Introducción a STEM', description: 'Panorama general de ciencias', thumbnail: 'https://via.placeholder.com/300x200/6366f1/ffffff?text=STEM+Video' },
+          { type: 'comic', title: 'Científicos Latinos', description: 'Historias inspiradoras', thumbnail: 'https://via.placeholder.com/300x200/6366f1/ffffff?text=STEM+Comic' }
+        ]
+      });
+    }
+
+    return userContent;
+  };
+
   return (
     <div className="space-y-6">
       <div className="bg-gray-900 rounded-xl p-8 shadow-lg border border-cyan-500/30">
@@ -898,27 +1066,142 @@ const RecursosPage = () => {
 
       <div className="bg-gray-900 rounded-xl p-6 shadow-lg border border-cyan-500/30">
         <h3 className="text-xl font-bold text-cyan-400 mb-4 font-mono">Crear Contenido con IA</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-black/30 p-4 rounded-lg border border-purple-500/30">
-            <h4 className="text-lg font-bold text-purple-400 mb-2 font-mono">Generador de Historias</h4>
-            <p className="text-cyan-300 text-sm mb-3">Crea tu propia novela STEM personalizada</p>
-            <button className="px-4 py-2 bg-purple-600 text-black rounded-lg hover:bg-purple-500 transition-colors font-mono font-bold">
-              [CREAR_HISTORIA]
-            </button>
+        <div className="mb-6">
+          <div className="bg-black/30 p-4 rounded-lg border border-cyan-500/30 mb-4">
+            <label className="block text-sm font-medium text-cyan-300 mb-2 font-mono">Describe tu idea:</label>
+            <textarea
+              value={userPrompt}
+              onChange={(e) => setUserPrompt(e.target.value)}
+              placeholder="Ej: Una historia sobre una joven que descubre la biotecnología marina..."
+              className="w-full px-4 py-3 bg-black/50 border border-cyan-500/50 rounded-lg focus:outline-none focus:border-cyan-400 text-cyan-100 font-mono placeholder-cyan-500/70 resize-none"
+              rows={3}
+            />
+            {selectedInterests.length > 0 && (
+              <p className="text-xs text-cyan-400 mt-2 font-mono">
+                💡 Se usarán tus intereses: {selectedInterests.join(', ')}
+              </p>
+            )}
           </div>
-          <div className="bg-black/30 p-4 rounded-lg border border-blue-500/30">
-            <h4 className="text-lg font-bold text-blue-400 mb-2 font-mono">Generador de Comics</h4>
-            <p className="text-cyan-300 text-sm mb-3">Diseña tu cómic educativo estilo Nano Banana</p>
-            <button className="px-4 py-2 bg-blue-600 text-black rounded-lg hover:bg-blue-500 transition-colors font-mono font-bold">
-              [CREAR_COMIC]
-            </button>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-black/30 p-4 rounded-lg border border-purple-500/30">
+              <h4 className="text-lg font-bold text-purple-400 mb-2 font-mono">Generador de Historias</h4>
+              <p className="text-cyan-300 text-sm mb-3">Crea tu propia novela STEM personalizada</p>
+              <button 
+                onClick={() => generateContent('historia')}
+                disabled={isGenerating || !userPrompt.trim()}
+                className="px-4 py-2 bg-purple-600 text-black rounded-lg hover:bg-purple-500 transition-colors font-mono font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isGenerating && contentType === 'historia' ? '[GENERANDO...]' : '[CREAR_HISTORIA]'}
+              </button>
+            </div>
+            <div className="bg-black/30 p-4 rounded-lg border border-blue-500/30">
+              <h4 className="text-lg font-bold text-blue-400 mb-2 font-mono">Contenido Recomendado</h4>
+              <p className="text-cyan-300 text-sm mb-3">Videos y cómics basados en tus intereses</p>
+              <button 
+                onClick={() => generateContent('recomendado')}
+                disabled={isGenerating}
+                className="px-4 py-2 bg-blue-600 text-black rounded-lg hover:bg-blue-500 transition-colors font-mono font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isGenerating && contentType === 'recomendado' ? '[CARGANDO...]' : '[VER_CONTENIDO]'}
+              </button>
+            </div>
           </div>
         </div>
+
+        {generatedContent && generatedContent !== 'comic_generated' && (
+          <div className="bg-gray-900 rounded-xl p-6 shadow-lg border border-cyan-500/30">
+            <div className="flex justify-between items-center mb-4">
+              <h4 className="text-xl font-bold text-cyan-400 font-mono">📚 Tu Historia Generada</h4>
+              <button
+                onClick={() => setGeneratedContent(null)}
+                className="px-3 py-1 bg-red-900/50 text-red-400 rounded-lg border border-red-500/50 hover:bg-red-800/50 transition-colors text-sm font-mono"
+              >
+                [CERRAR]
+              </button>
+            </div>
+            <div className="bg-black/40 p-4 rounded-lg border border-cyan-500/30 max-h-96 overflow-y-auto">
+              <pre className="text-cyan-100 font-mono text-sm whitespace-pre-wrap leading-relaxed">
+                {generatedContent}
+              </pre>
+            </div>
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => navigator.clipboard.writeText(generatedContent)}
+                className="px-4 py-2 bg-cyan-600 text-black rounded-lg hover:bg-cyan-500 transition-colors font-mono font-bold text-sm"
+              >
+                [COPIAR]
+              </button>
+              <button
+                onClick={() => {
+                  const blob = new Blob([generatedContent], { type: 'text/plain' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `historia_stem_${Date.now()}.txt`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="px-4 py-2 bg-green-600 text-black rounded-lg hover:bg-green-500 transition-colors font-mono font-bold text-sm"
+              >
+                [DESCARGAR]
+              </button>
+            </div>
+          </div>
+        )}
+
+        {comicPanels.length > 0 && (
+          <div className="bg-gray-900 rounded-xl p-6 shadow-lg border border-cyan-500/30">
+            <div className="flex justify-between items-center mb-6">
+              <h4 className="text-xl font-bold text-cyan-400 font-mono">🎯 Contenido Recomendado</h4>
+              <button
+                onClick={() => {
+                  setComicPanels([]);
+                  setGeneratedContent(null);
+                }}
+                className="px-3 py-1 bg-red-900/50 text-red-400 rounded-lg border border-red-500/50 hover:bg-red-800/50 transition-colors text-sm font-mono"
+              >
+                [CERRAR]
+              </button>
+            </div>
+            
+            <div className="space-y-6">
+              {comicPanels.map((category, categoryIndex) => (
+                <div key={categoryIndex} className="bg-black/40 rounded-lg border border-cyan-500/30 p-6">
+                  <h5 className="text-lg font-bold text-cyan-400 mb-4 font-mono">{category.title}</h5>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {category.items.map((item, itemIndex) => (
+                      <div key={itemIndex} className="bg-gray-800 rounded-lg overflow-hidden border border-cyan-500/30 hover:border-cyan-400 transition-all">
+                        <img 
+                          src={item.thumbnail} 
+                          alt={item.title}
+                          className="w-full h-32 object-cover"
+                        />
+                        <div className="p-4">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs px-2 py-1 bg-cyan-600 text-black rounded font-mono font-bold">
+                              {item.type.toUpperCase()}
+                            </span>
+                            <h6 className="font-bold text-cyan-100 font-mono text-sm">{item.title}</h6>
+                          </div>
+                          <p className="text-cyan-300 text-xs font-mono mb-3">{item.description}</p>
+                          <button className="px-3 py-1 bg-purple-600 text-black rounded text-xs font-mono font-bold hover:bg-purple-500 transition-colors">
+                            [VER_{item.type.toUpperCase()}]
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="bg-black/30 rounded-lg p-4 border border-cyan-500/30">
         <p className="text-sm font-mono text-cyan-300">
-          🤖 <strong className="text-cyan-400">[INFO]:</strong> Recursos existentes y generados con IA para inspirar tu vocación STEM.
+          🤖 <strong className="text-cyan-400">[INFO]:</strong> Historias generadas con AWS Bedrock, cómics gráficos con Stable Diffusion.
         </p>
       </div>
     </div>
