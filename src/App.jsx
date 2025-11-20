@@ -102,7 +102,7 @@ const HomePage = () => {
       <div className="bg-gradient-to-r from-gray-900/80 via-blue-900/80 to-black/80 backdrop-blur-sm rounded-2xl p-8 text-cyan-100 shadow-2xl border border-cyan-500/30">
         <div className="text-center mb-8">
           <img 
-            src="/logo.png" 
+            src="public/logo.png" 
             alt="AI-PathFinder Logo" 
             className="w-64 h-64 mx-auto mb-6"
           />
